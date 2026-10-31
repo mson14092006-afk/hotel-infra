@@ -48,7 +48,7 @@ private_db_subnets = {
 # RDS
 db_name              = "hotel"
 db_username          = "postgres"
-db_password          = "123"
+db_password          = "12345678"
 db_availability_zone = "ap-southeast-1a"
 db_multi_az          = false
 
