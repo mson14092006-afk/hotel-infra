@@ -1,6 +1,6 @@
 # Task definition
 resource "aws_ecs_task_definition" "main" {
-  family                   = "hotel-app"
+  family                   = "${var.environment}-hotel-app"
   requires_compatibilities = ["FARGATE"] # chạy tương thích với loại hạ tầng Fargate
   network_mode             = "awsvpc"
 
@@ -25,7 +25,7 @@ resource "aws_ecs_task_definition" "main" {
       logConfiguration = {
         logDriver = "awslogs" # Dùng driver của AWS để chuyển log lên CloudWatch Logs
         options = {
-          "awslogs-group"         = "/ecs/hotel-app" # log group trong CloudWatch Logs
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs.name # log group trong CloudWatch Logs
           "awslogs-region"        = "ap-southeast-1" # Region của log group
           "awslogs-stream-prefix" = "ecs"            # Prefix cho log stream name
         }
@@ -36,20 +36,20 @@ resource "aws_ecs_task_definition" "main" {
 
 # ECS cluster
 resource "aws_ecs_cluster" "main" {
-  name = "hotel-app-cluster"
+  name = "${var.environment}-hotel-app-cluster"
 
   tags = {
-    Name = "hotel-app-cluster"
+    Name = "${var.environment}-hotel-app-cluster"
   }
 }
 
 # ECS service
 resource "aws_ecs_service" "main" {
-  name            = "hotel-app"
+  name            = "${var.environment}-hotel-app"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.main.arn # task definition ARN 
 
-  desired_count = 4 # ECS cố gắng duy trì 4 task chạy
+  desired_count = var.ecs_desired_count # ECS cố gắng duy trì số task chạy
 
   launch_type = "FARGATE" # Chạy container trên hạ tầng Fargate do AWS quản lý
 
@@ -64,4 +64,9 @@ resource "aws_ecs_service" "main" {
     container_name   = "hotel-app"
     container_port   = 5000
   }
+}
+
+resource "aws_cloudwatch_log_group" "ecs" {
+  name              = "/ecs/hotel-app-${var.environment}"
+  retention_in_days = 7
 }

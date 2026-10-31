@@ -34,4 +34,7 @@ variable "private_db_subnets" {
   }))
 }
 
-
+# Environment
+variable "environment" {
+  type = string
+}

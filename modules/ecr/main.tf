@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "main" {
-  name                 = "hotel-app"
+  name                 = "${var.environment}-hotel-app"
   image_tag_mutability = "IMMUTABLE"
 
   image_scanning_configuration {
@@ -7,6 +7,6 @@ resource "aws_ecr_repository" "main" {
   }
 
   tags = {
-    Name = "hotel-app"
+    Name = "${var.environment}-hotel-app"
   }
 }

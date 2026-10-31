@@ -8,7 +8,7 @@ resource "aws_subnet" "public" {
   availability_zone = each.value.az
 
   tags = {
-    Name = "Public subnet"
+    Name = "${var.environment}-public-subnet"
   }
 }
 
@@ -22,7 +22,7 @@ resource "aws_subnet" "private_app" {
   availability_zone = each.value.az
 
   tags = {
-    Name = "Private app subnet"
+    Name = "${var.environment}-private-app-subnet"
   }
 }
 
@@ -36,6 +36,6 @@ resource "aws_subnet" "private_db" {
   availability_zone = each.value.az
 
   tags = {
-    Name = "Private db subnet"
+    Name = "${var.environment}-private-db-subnet"
   }
 }

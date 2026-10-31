@@ -1,5 +1,5 @@
 resource "aws_security_group" "rds" {
-  name        = "rds-sg"
+  name        = "${var.environment}-rds-sg"
   description = "Allow PostgreSQL access from ECS"
   vpc_id      = var.vpc_id
 
@@ -19,6 +19,6 @@ resource "aws_security_group" "rds" {
   }
 
   tags = {
-    Name = "rds-sg"
+    Name = "${var.environment}-rds-sg"
   }
 }

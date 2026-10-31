@@ -1,5 +1,5 @@
 resource "aws_security_group" "ecs" {
-  name        = "ecs-sg"
+  name        = "${var.environment}-ecs-sg"
   description = "Allow traffic from ALB to ECS tasks"
   vpc_id      = var.vpc_id
 
@@ -20,6 +20,6 @@ resource "aws_security_group" "ecs" {
   }
 
   tags = {
-    Name = "ecs-sg"
+    Name = "${var.environment}-ecs-sg"
   }
 }

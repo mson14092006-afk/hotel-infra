@@ -22,3 +22,15 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "environment" {
+  type = string
+}
+
+variable "db_multi_az" {
+  type        = bool
+}
+
+variable "db_availability_zone" {
+  type        = string
+}

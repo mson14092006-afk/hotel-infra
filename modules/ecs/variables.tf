@@ -13,3 +13,12 @@ variable "security_group_id" {
 variable "target_group_arn" {
   type = string
 }
+
+variable "environment" {
+  type = string
+}
+
+variable "ecs_desired_count" {
+  type        = number
+  description = "Number of ECS tasks to run"
+}
